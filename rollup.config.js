@@ -1,17 +1,19 @@
 import typescript from "rollup-plugin-typescript2";
 import nodeResolve from "rollup-plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
-import loadz0r from "rollup-plugin-loadz0r";
+import worker from 'rollup-plugin-worker';
 
 // Delete 'dist'
 require("rimraf").sync("dist");
 
 export default {
-  input: ["src/bootstrap.ts", "src/worker.ts"],
+  input: "src/bootstrap.ts",
   output: {
     dir: "dist",
-    format: "amd",
-    sourcemap: true
+    format: "system",
+    sourcemap: true,
+    // Add loader to Workers
+    banner: 'self.importScripts && !self.System && importScripts("system.js");'
   },
   plugins: [
     typescript({
@@ -24,7 +26,7 @@ export default {
       }
     }),
     nodeResolve(),
-    loadz0r(),
+    worker(),
     terser()
   ],
   experimentalCodeSplitting: true

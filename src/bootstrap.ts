@@ -20,7 +20,7 @@ async function bootstrap() {
   await initializeQueues();
   hookup("ui", new UiActor());
 
-  const worker = new Worker("worker.js");
+  const worker = new Worker("./worker.js", { type: "module" });
   // This is necessary in Safari to keep the worker alive.
   setInterval(() => {
     worker.postMessage("");
