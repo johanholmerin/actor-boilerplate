@@ -23,11 +23,12 @@ export default {
         compilerOptions: {
           sourceMap: true
         }
-      }
+      },
+      objectHashIgnoreUnknownHack: true,
+      clean: true
     }),
     nodeResolve(),
     worker(),
     terser()
-  ],
-  experimentalCodeSplitting: true
+  ]
 };
